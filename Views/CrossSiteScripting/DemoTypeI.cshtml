@@ -1,0 +1,104 @@
+@model VulnerableCoreApp.ViewModels.CommentsViewModel 
+@{ 
+    ViewData["Title"] = "Stored XSS (AKA Persistent or Type I)"; 
+}
+
+<div class="row">
+    <h1 class="text-center">Store and render unencoded HTML markup</h1>
+</div>
+
+<div class="row">
+  <h2>Example</h2>
+</div>
+<br />
+<div class="row">
+  <ul>
+    <li>Enter <mark>&lt;script&gt;alert('Test');&lt;/script&gt;</mark> or any other valid Javascript code wrapped inside script tag in comment textarea and submit</li>
+  </ul>
+</div>
+<div class="row">
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>
+                    <h2>Comments</h2>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Comments) {
+            <tr>
+                <td>
+                    <div class="clearfix">
+                        <div class="col-sm-11">
+                            <div class="clearfix">
+                                <b>@Html.Raw(item.Username)</b> <span>made a post</span>
+                            </div>
+                            <div class="clearfix">
+                                at <small>@Html.Raw(item.CreatedAt)</small>
+                            </div>     
+                            <div class="clearfix" style="padding: 0.5em">
+                                @Html.Raw(item.Text)
+                            </div>
+                        </div>
+                        <div class="col-sm-1">
+                            <form asp-controller="CrossSiteScripting" asp-action="DemoTypeIDelete" method="post">
+                                <input type="hidden" name="ID" value="@item.ID">
+                                <button type="submit" class="btn btn-danger">×</button>
+                            </form>
+                        </div>                 
+                    </div>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<div class="row">
+  <form asp-controller="CrossSiteScripting" asp-action="DemoTypeI" method="post">
+      <div class="form-group">
+          <textarea class="form-control" id="Text" name="Text" cols="20" rows="5" placeholder="Comment" style="resize: none"></textarea>
+      </div>
+      <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+<br />
+<div class="row">
+  <h2>Vulnerable Code</h2>
+</div>
+<br />
+<div class="row">
+  <p>Submitted comment is saved (stored) as raw text without sanitization techniques.</p>
+  <pre>
+    <code class="C#">
+        [HttpPost]
+        public IActionResult DemoTypeI(CommentViewModel comment)
+        {
+            Comment newComment = new Comment();
+            newComment.ID = Guid.NewGuid().ToString();
+            newComment.Username = &quot;Anonymous&quot;;
+            newComment.CreatedAt = DateTime.Now;
+            newComment.Text = comment.Text;
+            commentsRepository.Save(newComment);
+
+            return RedirectToAction(&quot;DemoTypeI&quot;);
+        }
+    </code>
+  </pre>
+</div>
+
+<div class="row">
+  <p>Application renders comment as raw text, without escaping HTML tags.</p>
+  <pre>
+    <code class="html">
+      &lt;div class=&quot;clearfix&quot; style=&quot;padding: 0.5em&quot;&gt;
+          @@Html.Raw(item.Text)
+      &lt;/div&gt;
+    </code>
+  </pre>
+</div>
+
+@section Scripts {
+<script>hljs.initHighlightingOnLoad();</script>
+}

@@ -1,0 +1,20 @@
+﻿@{ 
+  ViewData["Title"] = "Home Page"; 
+}
+
+<div class="row text-center">
+  <h1>VulnerableCoreApp Conent</h1>
+</div>
+
+<div class="row">
+  <ul>
+    <li>
+      <a asp-area="" asp-controller="CrossSiteScripting" asp-action="Index">Cross-Site Scripting (XSS)</a>
+      <ul>
+        <li>
+          <a asp-area="" asp-controller="CrossSiteScripting" asp-action="DemoTypeI">Store and render unencoded HTML markup</a>
+        </li>
+      </ul>
+    </li>
+  </ul>
+</div>

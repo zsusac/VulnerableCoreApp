@@ -1,0 +1,42 @@
+@{
+    ViewData["Title"] = "Stored XSS";
+}
+
+<div class="row">
+    <h1 class="text-center">Cross-Site Scripting (XSS)</h1>
+</div>
+<div class="row">
+    <p>XSS flaws occur whenever an application includes untrusted data in a new web page without proper validation or escaping, or updates an existing web page with user supplied data using a browser API that can create JavaScript. XSS allows attackers to execute scripts in the victim’s browser which can hijack user sessions, deface web sites, or redirect the user to malicious sites.</p>
+</div>
+
+<div class="row">
+    <h2>Stored XSS (AKA Persistent or Type I)</h2>
+</div>
+<div class="row">
+    <p>Stored XSS generally occurs when user input is stored on the target server, such as in a database, in a message forum, visitor log, comment field, etc. And then a victim is able to retrieve the stored data from the web application without that data being made safe to render in the browser. With the advent of HTML5, and other browser technologies, we can envision the attack payload being permanently stored in the victim’s browser, such as an HTML5 database, and never being sent to the server at all.</p>
+</div>
+<div class="row">
+    <ul>
+        <li><a href="@Url.Action("DemoTypeI", "CrossSiteScripting")">Store and render unencoded HTML markup</a></li>
+    </ul>
+</div>
+
+<div class="row">
+    <h2>Reflected XSS (AKA Non-Persistent or Type II)</h2>
+</div>
+<div class="row">
+    <ul>
+        <li><a href="@Url.Action("DemoTypeII", "CrossSiteScripting")">Malicious parameter is reflected back to the user</a></li>
+    </ul>
+</div>
+
+<div class="row">
+    <p>Reflected XSS occurs when user input is immediately returned by a web application in an error message, search result, or any other response that includes some or all of the input provided by the user as part of the request, without that data being made safe to render in the browser, and without permanently storing the user provided data. In some cases, the user provided data may never even leave the browser (see DOM Based XSS next).</p>
+</div>
+
+<div class="row">
+    <h2>DOM Based XSS (AKA Type-0)</h2>
+</div>
+<div class="row">
+    <p>As defined by Amit Klein, who published the first article about this issue[1], DOM Based XSS is a form of XSS where the entire tainted data flow from source to sink takes place in the browser, i.e., the source of the data is in the DOM, the sink is also in the DOM, and the data flow never leaves the browser. For example, the source (where malicious data is read) could be the URL of the page (e.g., document.location.href), or it could be an element of the HTML, and the sink is a sensitive method call that causes the execution of the malicious data (e.g., document.write)."</p>
+</div>
