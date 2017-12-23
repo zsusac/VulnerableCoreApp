@@ -58,7 +58,7 @@
 
   #search .close {
     position: fixed;
-    top: 15px;
+    top: 55px;
     right: 15px;
     color: #fff;
     background-color: #428bca;
@@ -85,6 +85,14 @@
 
 <div class="row">
   <a href="#search">Search</a>
+</div>
+
+<div class="row">
+  @if(ViewData["query"] != null) {
+    @Html.Raw((string)ViewData["query"]);  
+  } else {
+    <span>Results</span> 
+  }
 </div>
 
 <div id="search">

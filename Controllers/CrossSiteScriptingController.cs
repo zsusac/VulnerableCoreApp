@@ -50,9 +50,11 @@ namespace VulnerableCoreApp.Controllers
         }
 
         [HttpGet]
-        public IActionResult DemoTypeII(string q)
+        public IActionResult DemoTypeII(string query)
         {
-          return View();
+            ViewData["query"] = query;
+            HttpContext.Response.Headers.Add("X-XSS-Protection","0");
+            return View();
         }
     }
 }
