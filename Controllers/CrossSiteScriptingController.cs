@@ -53,6 +53,8 @@ namespace VulnerableCoreApp.Controllers
         public IActionResult DemoTypeII(string query)
         {
             ViewData["query"] = query;
+            
+            // Disable Chrome browser XSS protection 
             HttpContext.Response.Headers.Add("X-XSS-Protection","0");
             return View();
         }

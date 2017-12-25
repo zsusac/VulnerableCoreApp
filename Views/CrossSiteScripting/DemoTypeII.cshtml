@@ -79,25 +79,74 @@
 <br />
 <div class="row">
   <ul>
-    <li>TBD</li>
+    <li>Click search to open search form</li>
+    <li>Enter
+      <mark>&lt;script&gt;alert('Test');&lt;/script&gt;</mark> or any other valid Javascript code wrapped inside script tag and
+      click search</li>
   </ul>
 </div>
 
 <div class="row">
-  <a href="#search">Search</a>
+  <a class="btn btn-primary " href="#search">Search</a>
 </div>
+<br />
 
 <div class="row">
   @if(ViewData["query"] != null) {
-    @Html.Raw((string)ViewData["query"]);  
+  <div class="well text-center">@Html.Raw((string)ViewData["query"])</div>
   } else {
-    <span>Results</span> 
+  <div class="well text-center">
+    <span>Search Results</span>
+  </div>
   }
 </div>
 
+<br />
+<div class="row">
+  <h2>Vulnerable Code</h2>
+</div>
+
+<br />
+<div class="row">
+  <p> Entered Javascript code is sent to the server in GET parameter named
+    <i>query.</i>
+  </p>
+      <pre>
+    <code class="C#">
+        [HttpGet]
+        public IActionResult DemoTypeII(string query)
+        {
+            ViewData["query"] = query;
+            
+            // Disable Chrome browser XSS protection 
+            HttpContext.Response.Headers.Add("X-XSS-Protection","0");
+            return View();
+        }
+    </code>
+  </pre>
+</div>
+
+<div class="row">
+  <p>Server responses with search result and renders <i>query</i> parameter.</p>
+  <pre>
+    <code class="html">
+        &lt;div class="row"&gt;
+          @@if(ViewData["query"] != null) {
+          &lt;div class="well text-center"&gt;@@Html.Raw((string)ViewData["query"])&lt;/div&gt;
+          } else {
+          &lt;div class="well text-center"&gt;
+            &lt;span&gt;Search Results&lt;/span&gt;
+          &lt;/div&gt;
+          }
+        &lt;/div&gt;      
+    </code>
+  </pre>
+
+</div>
+
+<!-- Search form -->
 <div id="search">
   <button type="button" class="close">×</button>
-
   <form asp-controller="CrossSiteScripting" asp-action="DemoTypeII" method="get">
     <input name="query" type="search" value="" placeholder="type keyword(s) here" />
     <button type="submit" class="btn btn-primary">Search</button>
@@ -117,5 +166,7 @@
       $(this).removeClass('open');
     }
   });
+
+  hljs.initHighlightingOnLoad();
 </script>
 }
