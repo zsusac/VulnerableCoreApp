@@ -12,4 +12,12 @@ $ dotnet run
 
 Browse to http://localhost:5000
 
+# Examples
+
+## Stored XSS
+![Stored XSS](images/StoredXSS.png "Title")
+
+## Reflected XSS
+![Reflected XSS](images/ReflectedXSS.png "Title")
+
 Pull requests and advices are always welcome.
