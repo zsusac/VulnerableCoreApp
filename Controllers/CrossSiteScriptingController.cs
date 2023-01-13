@@ -58,5 +58,7 @@ namespace VulnerableCoreApp.Controllers
             HttpContext.Response.Headers.Add("X-XSS-Protection","0");
             return View();
         }
+        string password;
+        password = "aqsa"
     }
 }
