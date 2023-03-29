@@ -1,0 +1,10 @@
+version: '3.9'
+
+services:
+  core-app:
+    container_name: vulnerable-core-app
+    ports:
+    - 5000:80
+    build:
+      context: .
+      dockerfile: Dockerfile

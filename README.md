@@ -12,6 +12,21 @@ $ dotnet run
 
 Browse to http://localhost:5000
 
+# Docker
+
+Build with Docker:
+
+```bash
+docker build -t vulnerable-core-app .
+docker run -d -p 5000:80 --name vulnerable-core-app vulnerable-core-app
+```
+
+Alternatively, you can build and run with Docker Compose:
+
+```bash
+docker-compose up -d
+```
+
 # Examples
 
 ## Stored XSS
