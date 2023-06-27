@@ -768,7 +768,7 @@ $.extend( $.validator, {
 		},
 
 		invalidElements: function() {
-			return $( this.errorList ).map(function() {
+			return $( this.errorList ).map( () => {
 				return this.element;
 			});
 		},
