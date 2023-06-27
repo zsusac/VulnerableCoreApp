@@ -998,7 +998,7 @@ $.extend( $.validator, {
 			value = Number( value );
 
 			// Support Opera Mini, which returns NaN for undefined minlength
-			if ( isNaN( value ) ) {
+			if ( Number.isNaN( value ) ) {
 				value = undefined;
 			}
 		}
