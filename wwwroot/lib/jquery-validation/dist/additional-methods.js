@@ -961,7 +961,7 @@ $.validator.addMethod("vinUS", function(v) {
 		if (i === 8) {
 			cdv = d;
 		}
-		if (!isNaN(d)) {
+		if (!Number.isNaN(d)) {
 			d *= f;
 		} else {
 			for (n = 0; n < LL.length; n++) {
