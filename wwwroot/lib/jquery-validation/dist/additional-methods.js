@@ -793,7 +793,7 @@ $.validator.addMethod("require_from_group", function(value, element, options) {
 	var $fields = $(options[1], element.form),
 		$fieldsFirst = $fields.eq(0),
 		validator = $fieldsFirst.data("valid_req_grp") ? $fieldsFirst.data("valid_req_grp") : $.extend({}, this),
-		isValid = $fields.filter(function() {
+		isValid = $fields.filter(() => {
 			return validator.elementValue(this);
 		}).length >= options[0];
 
