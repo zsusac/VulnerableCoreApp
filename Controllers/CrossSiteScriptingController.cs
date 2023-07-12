@@ -8,7 +8,7 @@ namespace VulnerableCoreApp.Controllers
 {
     public class CrossSiteScriptingController : Controller
     {
-        private ICommentsRepository commentsRepository;
+        private readonly ICommentsRepository commentsRepository;
         public CrossSiteScriptingController(ICommentsRepository commentsRepository)
         {
             this.commentsRepository = commentsRepository;
